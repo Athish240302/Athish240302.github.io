@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Athish MA | Cloud Engineer</title>
-  <meta name="description" content="Athish MA — AWS Cloud Engineer. Fresher with hands-on experience in EC2, S3, RDS, IAM, Lambda, Route 53, Disaster Recovery, and Data Lake Engineering. Open to UAE cloud roles.">
+  <title>Athish MA | Cloud & AI Engineer</title>
+  <meta name="description" content="Athish MA — AWS Cloud Engineer with B.Tech in AI & Data Science. Hands-on EC2, S3, RDS, Lambda, Disaster Recovery, Data Lake. Open to UAE cloud roles.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;1,300&family=Outfit:wght@200;300;400;600;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,11 +16,21 @@
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursorRing"></div>
 
-  <!-- Background effects -->
+  <!-- Background -->
+  <canvas id="bgCanvas"></canvas>
   <div class="grid-bg"></div>
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
+
+  <!-- Terminal Loader -->
+  <div class="loader" id="loader">
+    <div class="loader-inner">
+      <div class="loader-logo">AM</div>
+      <div class="loader-bar"><div class="loader-fill" id="loaderFill"></div></div>
+      <div class="loader-text" id="loaderText">Initializing cloud environment...</div>
+    </div>
+  </div>
 
   <!-- ── NAVIGATION ─────────────────────────────────── -->
   <nav id="navbar">
@@ -33,7 +43,7 @@
       <li><a href="#certifications">Certs</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="mailto:athish2024.03@gmail.com" class="nav-cta">Hire Me</a>
+    <a href="mailto:athishma0302@gmail.com" class="nav-cta">Hire Me</a>
     <button class="nav-hamburger" id="hamburger" aria-label="Menu">&#9776;</button>
   </nav>
 
@@ -52,11 +62,11 @@
     <div class="hero-inner">
       <div class="hero-tag">
         <span class="dot"></span>
-        Available for UAE Opportunities
+        <span id="heroTagText">Available for UAE Opportunities</span>
       </div>
       <h1>
-        Athish MA
-        <span class="line2">Cloud Engineer</span>
+        <span class="hero-name">Athish MA</span>
+        <span class="line2" id="typeTarget"></span>
       </h1>
       <p class="hero-sub">B.Tech AI &amp; Data Science — <span>AWS · Linux · Python · DevOps</span></p>
       <p class="hero-desc">
@@ -66,23 +76,33 @@
       </p>
       <div class="hero-buttons">
         <a href="#projects" class="btn-primary">View My Work</a>
-        <a href="mailto:athish2024.03@gmail.com" class="btn-secondary">Get In Touch</a>
+        <a href="mailto:athishma0302@gmail.com" class="btn-secondary">Get In Touch</a>
       </div>
     </div>
 
     <div class="hero-stats">
       <div class="stat">
-        <div class="stat-num">3+</div>
+        <div class="stat-num" data-count="3">0</div>
         <div class="stat-label">Cloud Projects</div>
       </div>
       <div class="stat">
-        <div class="stat-num">10+</div>
+        <div class="stat-num" data-count="10">0</div>
         <div class="stat-label">AWS Services</div>
       </div>
       <div class="stat">
         <div class="stat-num">UAE</div>
         <div class="stat-label">Target Market</div>
       </div>
+    </div>
+
+    <!-- Floating AWS badges -->
+    <div class="floating-badges">
+      <div class="fbadge fbadge-1">EC2</div>
+      <div class="fbadge fbadge-2">S3</div>
+      <div class="fbadge fbadge-3">Lambda</div>
+      <div class="fbadge fbadge-4">RDS</div>
+      <div class="fbadge fbadge-5">IAM</div>
+      <div class="fbadge fbadge-6">Route53</div>
     </div>
 
     <div class="scroll-hint">
@@ -132,7 +152,7 @@
       </div>
       <div class="info-row">
         <span class="info-label">visa status</span>
-        <span class="info-value"><span class="badge">Sponsorship Available</span></span>
+        <span class="info-value"><span class="badge badge-green">Visit Visa</span></span>
       </div>
       <div class="info-row">
         <span class="info-label">availability</span>
@@ -151,6 +171,61 @@
       <div class="section-label">02 — Skills</div>
       <h2>Tools &amp; Technologies</h2>
     </div>
+
+    <!-- Interactive AWS Architecture Diagram -->
+    <div class="arch-diagram reveal">
+      <div class="arch-label">// Live AWS Architecture — Hover to explore</div>
+      <div class="arch-canvas" id="archCanvas">
+        <div class="arch-region">
+          <div class="arch-region-label">AWS Cloud</div>
+
+          <div class="arch-vpc">
+            <div class="arch-vpc-label">VPC</div>
+
+            <div class="arch-row">
+              <div class="arch-node" data-tip="Elastic Load Balancer — distributes traffic across AZs">
+                <span class="arch-icon">⚖️</span><span>ELB</span>
+              </div>
+            </div>
+
+            <div class="arch-row arch-row-3">
+              <div class="arch-node" data-tip="EC2 — Virtual servers hosting application tiers">
+                <span class="arch-icon">🖥️</span><span>EC2</span>
+              </div>
+              <div class="arch-node" data-tip="Lambda — Serverless compute, event-driven functions">
+                <span class="arch-icon">λ</span><span>Lambda</span>
+              </div>
+              <div class="arch-node" data-tip="API Gateway — REST & HTTP API management layer">
+                <span class="arch-icon">🔀</span><span>API GW</span>
+              </div>
+            </div>
+
+            <div class="arch-row">
+              <div class="arch-node arch-node-db" data-tip="RDS MySQL — Managed relational DB with Multi-AZ">
+                <span class="arch-icon">🗄️</span><span>RDS</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="arch-edge-services">
+            <div class="arch-node arch-node-s3" data-tip="S3 — Object storage: Bronze/Silver/Gold Data Lake tiers">
+              <span class="arch-icon">🪣</span><span>S3</span>
+            </div>
+            <div class="arch-node arch-node-s3" data-tip="CloudFront — CDN with global edge locations for low latency">
+              <span class="arch-icon">🌐</span><span>CloudFront</span>
+            </div>
+            <div class="arch-node arch-node-s3" data-tip="IAM — Fine-grained access control & least-privilege policies">
+              <span class="arch-icon">🔐</span><span>IAM</span>
+            </div>
+            <div class="arch-node arch-node-s3" data-tip="Route 53 — DNS routing with health checks & failover">
+              <span class="arch-icon">📡</span><span>Route 53</span>
+            </div>
+          </div>
+        </div>
+        <div class="arch-tooltip" id="archTooltip"></div>
+      </div>
+    </div>
+
     <div class="skills-grid">
       <div class="skill-card reveal">
         <span class="skill-card-icon">☁️</span>
@@ -303,11 +378,15 @@
     </div>
     <div class="projects-grid">
 
-      <div class="project-card reveal">
+      <div class="project-card reveal" data-category="cloud">
         <div class="project-num">01</div>
         <div class="project-type">Cloud Architecture</div>
         <div class="project-title">AWS S3 Data Lake — Bronze·Silver·Gold ETL</div>
         <div class="project-desc">Layered S3 Data Lake with PySpark ETL pipelines transforming raw CSV to partitioned Parquet format. Reduced Athena query scan costs by 60% via partition pruning. Serverless SQL analytics on Gold layer without a provisioned database.</div>
+        <div class="project-impact">
+          <div class="impact-stat"><span class="impact-num">60%</span><span class="impact-label">Query Cost Reduction</span></div>
+          <div class="impact-stat"><span class="impact-num">3</span><span class="impact-label">Data Layers</span></div>
+        </div>
         <div class="project-stack">
           <span class="stack-tag">AWS S3</span><span class="stack-tag">EC2</span>
           <span class="stack-tag">PySpark</span><span class="stack-tag">Athena</span>
@@ -315,11 +394,15 @@
         </div>
       </div>
 
-      <div class="project-card reveal">
+      <div class="project-card reveal" data-category="cloud">
         <div class="project-num">02</div>
         <div class="project-type">Disaster Recovery</div>
         <div class="project-title">Multi-Region AWS DR Architecture</div>
         <div class="project-desc">Designed a multi-region DR environment with 99.9% availability for a hospitality client. Route 53 health checks automate failover in seconds. Reduced RTO by 30% through iterative simulation drills.</div>
+        <div class="project-impact">
+          <div class="impact-stat"><span class="impact-num">99.9%</span><span class="impact-label">Availability</span></div>
+          <div class="impact-stat"><span class="impact-num">30%</span><span class="impact-label">Faster RTO</span></div>
+        </div>
         <div class="project-stack">
           <span class="stack-tag">EC2</span><span class="stack-tag">Route 53</span>
           <span class="stack-tag">IAM</span><span class="stack-tag">VPC</span>
@@ -327,11 +410,15 @@
         </div>
       </div>
 
-      <div class="project-card reveal">
+      <div class="project-card reveal" data-category="cloud">
         <div class="project-num">03</div>
         <div class="project-type">Cloud Infrastructure</div>
         <div class="project-title">3-Tier AWS Architecture for Hospital E-Commerce</div>
         <div class="project-desc">Production-grade 3-tier cloud system for Aster Multispeciality Hospital. Zero-downtime deployment using ELB, CloudFront CDN, Lambda serverless backend, and hardened IAM + VPC security posture.</div>
+        <div class="project-impact">
+          <div class="impact-stat"><span class="impact-num">0</span><span class="impact-label">Downtime</span></div>
+          <div class="impact-stat"><span class="impact-num">10+</span><span class="impact-label">AWS Services</span></div>
+        </div>
         <div class="project-stack">
           <span class="stack-tag">EC2</span><span class="stack-tag">RDS</span>
           <span class="stack-tag">CloudFront</span><span class="stack-tag">Lambda</span>
@@ -339,7 +426,7 @@
         </div>
       </div>
 
-      <div class="project-card reveal">
+      <div class="project-card reveal" data-category="ai">
         <div class="project-num">04</div>
         <div class="project-type">Deep Learning</div>
         <div class="project-title">Image Colorization — GAN + U-Net</div>
@@ -350,18 +437,18 @@
         </div>
       </div>
 
-      <div class="project-card reveal">
+      <div class="project-card reveal" data-category="iot">
         <div class="project-num">05</div>
         <div class="project-type">Blockchain + IoT — 🏆 Top 10 National</div>
-        <div class="project-title">Blockchain Air Purification System</div>
-        <div class="project-desc">Solar-powered air purifier with a blockchain smart contract layer for tamper-proof pollution data tracking. Ranked Top 10 nationally in a competitive hackathon across India.</div>
+        <div class="project-title">Outdoor Air Purification System</div>
+        <div class="project-desc">Solar-powered outdoor air purifier with a blockchain smart contract layer for tamper-proof pollution data tracking. Ranked Top 10 nationally in a competitive hackathon across India.</div>
         <div class="project-stack">
           <span class="stack-tag">Blockchain</span><span class="stack-tag">Smart Contracts</span>
           <span class="stack-tag">IoT</span><span class="stack-tag">Solar Energy</span>
         </div>
       </div>
 
-      <div class="project-card reveal">
+      <div class="project-card reveal" data-category="ai">
         <div class="project-num">06</div>
         <div class="project-type">NLP / Python</div>
         <div class="project-title">Python NLP Virtual Assistant</div>
@@ -423,11 +510,11 @@
       <h2 class="contact-headline">Open to UAE Cloud Roles</h2>
       <p class="contact-sub">
         Fresher cloud engineer with real AWS project experience, available for
-        immediate relocation to Dubai or Abu Dhabi. Visa sponsorship ready.
+        immediate relocation to Dubai or Abu Dhabi. On Visit Visa — ready to start now.
       </p>
       <div class="contact-links">
-        <a href="mailto:athish2024.03@gmail.com" class="contact-link email">
-          ✉ athish2024.03@gmail.com
+        <a href="mailto:athishma0302@gmail.com" class="contact-link email">
+          ✉ athishma0302@gmail.com
         </a>
         <a href="https://linkedin.com/in/athish-ma" target="_blank" rel="noopener" class="contact-link secondary">
           🔗 LinkedIn
@@ -441,13 +528,11 @@
 
   <!-- ── FOOTER ─────────────────────────────────────── -->
   <footer>
-    <div class="footer-left">© 2026 <span>Athish MA</span> — Cloud Engineer</div>
+    <div class="footer-left">© 2026 <span>Athish MA</span> — Cloud & AI Engineer</div>
     <div class="footer-right">
-      <a href="mailto:athish2024.03@gmail.com" class="footer-link">athish2024.03@gmail.com</a>
-      &nbsp;·&nbsp;
-      <a href="https://github.com/Athish240302" target="_blank" rel="noopener" class="footer-link">GitHub</a>
-      &nbsp;·&nbsp;
-      Built for UAE Job Hunt 🚀
+      <a href="mailto:athishma0302@gmail.com" class="footer-link">Email</a> ·
+      <a href="https://linkedin.com/in/athish-ma" class="footer-link">LinkedIn</a> ·
+      <a href="https://github.com/Athish240302" class="footer-link">GitHub</a>
     </div>
   </footer>
 
